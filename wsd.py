@@ -25,7 +25,19 @@ for line in train_lines:
         last_label = re.search(r"senseid=\"(.*)\"", line).group(1)
     if line.startswith("<context>"):
         context = True
+mfs = ""
+if (len(context_to_label["product"]) >len(context_to_label["phone"]) ):
+    mfs = "product"
+else:
+    mfs = "phone"
 
+ ### BASELINE CODE
 
-print(len(context_to_label["product"]))
-print(len(context_to_label["phone"]))
+test_file = open(test_path,"r")
+test_lines = test_file.read().split("\n")
+test_file.close()
+for line in test_lines:
+    if line.startswith("<instance"):
+        id = re.search(r"id=\"(.*)\"", line).group(1)
+        print("<answer instance=\""+id+"\" senseid=\""+mfs+"\"/>")
+
