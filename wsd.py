@@ -36,8 +36,12 @@ else:
 test_file = open(test_path,"r")
 test_lines = test_file.read().split("\n")
 test_file.close()
+
+log_file = open(log_path,"w")
+
 for line in test_lines:
     if line.startswith("<instance"):
         id = re.search(r"id=\"(.*)\"", line).group(1)
         print("<answer instance=\""+id+"\" senseid=\""+mfs+"\"/>")
-
+        log_file.write("<answer instance=\""+id+"\" senseid=\""+mfs+"\"/>\n")
+log_file.close()
